@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Template</title>
+
+    <style>
+        table, th, td {
+          border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+    <h1 align="center"><a href="/">Menu</a></h1>
+    <br>
+    <h3 align="center"><a href="/author/template">Author</a></h3>
+    <h3 align="center"><a href="/publisher/template">Publisher</a></h3>
+    <br>
+    <div align="center">
+        <H1>Register a Book</H1>
+        <form action="#" th:action="@{/book/register}" th:object="${book}" method="POST">
+            <table>
+                <tr>
+                    <td>Name: </td>
+                    <td><input type="text" th:field="*{name}" placeholder="Enter a Name" required/></td>
+                    <td th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></td>
+                </tr>
+                <tr>
+                    <td>Category: </td>
+                    <td><input type="text" th:field="*{category}" placeholder="Enter a Category" required/></td>
+                    <td th:if="${#fields.hasErrors('category')}" th:errors="*{category}"></td>
+                </tr>
+                <tr>
+                    <td>Published: </td>
+                    <td><input type="date" th:field="*{published}" required/></td>
+                    <td th:if="${#fields.hasErrors('published')}" th:errors="*{published}"></td>
+                </tr>
+            </table>
+            <div>
+                <input type="submit" value="Register"/>
+            </div>
+        </form>
+    </div>
+    <br>
+    <br>
+    <div align="center">
+        <table>
+            <h1>Books Registered</h1>
+        
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Published</th>
+            </tr>
+        
+            <tr th:each="book : ${books}">
+                <td th:text="${book.id}"></td>
+                <td th:text="${book.name}"></td>
+                <td th:text="${book.category}"></td>
+                <td th:text="${book.published}"></td>
+                <td><a th:href="@{'/book/details/' + ${book.id}}">Add Author</a></td>
+                <td><a th:href="@{'/book/edit?book_id=' + ${book.id}}">Edit</a></td>
+                <td><a th:href="@{'/book/remove?book_id=' + ${book.id}}">Remove</a></td>
+            </tr>
+        </table>
+    </div>
+    <br>
+</body>
+</html>

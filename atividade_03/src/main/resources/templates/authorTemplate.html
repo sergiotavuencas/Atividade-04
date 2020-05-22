@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Author Template</title>
+
+    <style>
+        table, th, td {
+          border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+    <h1 align="center"><a href="/">Menu</a></h1>
+    <br>
+    <h3 align="center"><a href="/book/template">Book</a></h3>
+    <h3 align="center"><a href="/publisher/template">Publisher</a></h3>
+    <br>
+    <div align="center">
+        <h1>Register an Author</h1>
+        <form action="#" th:action="@{/author/register}" th:object="${author}" method="POST">
+            <table>
+                <tr>
+                    <td>Name: </td>
+                    <td><input type="text" th:field="*{name}" placeholder="Enter a Name" required/></td>
+                    <td th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></td>
+                </tr>
+                <tr>
+                    <td>E-mail: </td>
+                    <td><input type="text" th:field="*{email}" placeholder="Enter an Email" required/></td>
+                    <td th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></td>
+                </tr>
+                <tr>
+                    <td>Phone: </td>
+                    <td><input type="text" th:field="*{phone}" placeholder="Enter a Phone" required/></td>
+                    <td th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></td>
+                </tr>
+            </table>
+            <div>
+                <input type="submit" value="Register"/>
+            </div>
+        </form>
+    </div>
+    <br>
+    <br>
+    <div align="center">
+        <table>
+            <h1>Authors</h1>
+        
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>E-Mail</th>
+            </tr>
+        
+            <tr th:each="author : ${authors}">
+                <td th:text="${author.id}"></td>
+                <td th:text="${author.name}"></td>
+                <td th:text="${author.phone}"></td>
+                <td th:text="${author.email}"></td>
+                <td><a th:href="@{'/author/details/' + ${author.id}}">Add Book</a></td>
+                <td><a th:href="@{'/author/edit?author_id=' + ${author.id}}">Edit</a></td>
+                <td><a th:href="@{'/author/remove?author_id=' + ${author.id}}">Remove</a></td>
+            </tr>
+        </table>
+    </div>
+    <br>
+</body>
+</html>

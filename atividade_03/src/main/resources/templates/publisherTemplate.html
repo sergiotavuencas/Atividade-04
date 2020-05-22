@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Publisher Template</title>
+
+    <style>
+        table, th, td {
+          border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+    <h1 align="center"><a href="/">Menu</a></h1>
+    <br>
+    <h3 align="center"><a href="/author/template">Author</a></h3>
+    <h3 align="center"><a href="/book/template">Book</a></h3>
+    <br>
+    <div align="center">
+        <H1>Register a Publisher</H1>
+        <form action="#" th:action="@{/publisher/register}" th:object="${publisher}" method="POST">
+            <table>
+                <tr>
+                    <td>Name: </td>
+                    <td><input type="text" th:field="*{name}" placeholder="Enter a Name" required/></td>
+                    <td th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></td>
+                </tr>
+                <tr>
+                    <td>Address: </td>
+                    <td><input type="text" th:field="*{address}" placeholder="Enter an Address" required/></td>
+                    <td th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></td>
+                </tr>
+                <tr>
+                    <td>Founded: </td>
+                    <td><input type="date" th:field="*{founded}" required/></td>
+                    <td th:if="${#fields.hasErrors('founded')}" th:errors="*{founded}"></td>
+                </tr>
+            </table>
+            <div>
+                <input type="submit" value="Register"/>
+            </div>
+        </form>
+    </div>
+    <br>
+    <br>
+    <div align="center">
+        <table>
+            <h1>Registered Publishers</h1>
+        
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Founded</th>
+            </tr>
+        
+            <tr th:each="publisher : ${publishers}">
+                <td th:text="${publisher.id}"></td>
+                <td th:text="${publisher.name}"></td>
+                <td th:text="${publisher.address}"></td>
+                <td th:text="${publisher.founded}"></td>
+                <td><a th:href="@{'/publisher/details/' + ${publisher.id}}">Add Book</a></td>
+                <td><a th:href="@{'/publisher/edit?publisher_id=' + ${publisher.id}}">Edit</a></td>
+                <td><a th:href="@{'/publisher/remove?publisher_id=' + ${publisher.id}}">Remove</a></td>
+            </tr>
+        </table>
+    </div>
+    <br>
+</body>
+</html>

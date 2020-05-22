@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Edit</title>
+    <style>
+        table, th, td {
+          border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <div align="center">
+        <br>
+        <h1 align="center"><a href="/">Menu</a></h1>
+        <br>
+        <h3 align="center"><a href="/author/template">Author</a></h3>
+        <h3 align="center"><a href="/publisher/template">Publisher</a></h3>
+        <h3 align="center"><a href="/book/template">Return</a></h3>
+        <br>
+        <h1>Edit Book</h1>
+        <br>
+        <form action="#" th:action="@{/book/register}" th:object="${book}" method="POST" id="formBook">
+            <table>
+                <tr>
+                    <td>Id:</td>
+                    <td><span th:text="${book.id}"></span></td>
+                    <input type="hidden" th:value="${book.id}" th:field="${book.id}" name="id"/>
+                </tr>
+                <tr>
+                    <td>Name: </td>
+                    <td><input type="text" th:field="*{name}" placeholder="Enter a New Name" required/></td>
+                    <td th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></td>
+                </tr>
+                <tr>
+                    <td>Category: </td>
+                    <td><input type="text" th:field="*{category}" placeholder="Enter a New Category" required/></td>
+                    <td th:if="${#fields.hasErrors('category')}" th:errors="*{category}"></td>
+                </tr>
+                <tr>
+                    <td>Published: </td>
+                    <td><input type="date" th:field="*{published}" required/></td>
+                    <td th:if="${#fields.hasErrors('published')}" th:errors="*{published}"></td>
+                </tr>
+                <tr>
+                    <td>Publisher: </td>
+                    <td>
+                        <select th:field="${book.publisher}" required>
+                            <option value="">Choose a Publisher</option>
+                            <option th:each="publisher : ${publishers}"
+                                    th:value="${publisher.id}"
+                                    th:text="${publisher.name}">
+                            </option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+            <div>
+                <input type="submit" value="Update"/>
+                <input type="reset" value="Cancel"/>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
